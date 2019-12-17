@@ -1,6 +1,6 @@
 spring:
   application:
-    name: zuulproxy
+    name: pdftoword
   profiles:
     active:
       default
