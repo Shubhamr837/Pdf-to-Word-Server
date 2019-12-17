@@ -27,11 +27,14 @@ public class PdfToWordService {
     @GetMapping("/doc")
     public String pdftoword(@RequestParam("file") MultipartFile file) throws IOException {
         File pdf_file = fileService.createFile("pdf");
-
-        try (InputStream is = file.getInputStream()) {
+        InputStream is = null;
+        try {
+            is = file.getInputStream();
             Files.copy(is, pdf_file.toPath());
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            is.close();
         }
         PDDocument pdfDocument = null;
         pdfDocument = PDDocument.load(pdf_file);
