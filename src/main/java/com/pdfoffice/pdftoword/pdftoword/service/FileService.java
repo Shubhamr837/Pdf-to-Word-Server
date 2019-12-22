@@ -14,8 +14,8 @@ public class FileService {
         this.serviceConfig = serviceConfig;
     }
 
-    public File createFile(String type) {
-        return new File(System.getProperty("user.dir"), "document." + type);
+    public File createFile(String file_name) {
+        return new File(System.getProperty("user.dir"), file_name);
     }
     public void getFile(){
 
