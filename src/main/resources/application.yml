@@ -1,10 +1,10 @@
 server:
-  port: 8083
+  port: 80
 eureka:
   instance:
     preferIpAddress: true
   client:
-    registerWithEureka: false
-    fetchRegistry: false
+    registerWithEureka: true
+    fetchRegistry: true
     serviceUrl:
-      defaultZone: http://localhost:8081/eureka/
+      defaultZone: http://eureka-server/eureka/
