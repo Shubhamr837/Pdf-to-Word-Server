@@ -24,7 +24,7 @@ public class AwsService {
     private AmazonS3 s3Client;
 
     public AwsService() {
-        credentials = new BasicAWSCredentials(CommonConstants.AWS_ACCESS_ID, CommonConstants.AWS_SECRET_KEY);
+        credentials = new BasicAWSCredentials(System.getenv("AWS_ACCESS_ID"), System.getenv("AWS_SECRET_KEY"));
         s3Client = AmazonS3ClientBuilder.standard()
                 .withRegion(Regions.AP_SOUTH_1)
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
