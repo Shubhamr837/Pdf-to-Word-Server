@@ -1,12 +1,14 @@
 package com.pdfoffice.pdftoword.pdftoword.service;
 
 
+import com.pdfoffice.pdftoword.pdftoword.model.Response;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.apache.poi.xwpf.usermodel.XWPFRun;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,11 +23,14 @@ import java.nio.file.Paths;
 @RestController
 @RequestMapping(method = RequestMethod.POST, value = "/convert")
 public class PdfToWordService {
+    private String download_link;
     @Autowired
     private FileService fileService;
+    @Autowired
+    private AwsService awsService;
 
     @RequestMapping(method = RequestMethod.POST, value = "/docx")
-    public String pdftoword(InputStream in) throws IOException {
+    public ResponseEntity pdftoword(InputStream in) throws IOException {
         File pdf_file = fileService.createFile("pdf");
         FileOutputStream fileOutputStream = new FileOutputStream(pdf_file);
         int len;
@@ -44,7 +49,7 @@ public class PdfToWordService {
         pdfDocument = PDDocument.load(pdf_file);
         pdf_file.delete();
         if (pdfDocument == null) {
-            return "error";
+            return ResponseEntity.badRequest().body(new Response(null));
         }
         PDFTextStripper pdfStripper = new PDFTextStripper();
         XWPFDocument document = new XWPFDocument();
@@ -74,13 +79,14 @@ public class PdfToWordService {
         System.out.println(doc_file.getAbsolutePath());
         document.close();
         pdfDocument.close();
+        out.close();
+        download_link = awsService.uploadFile(doc_file).toString();
 
-
-        return doc_file.getAbsolutePath();
+        return ResponseEntity.ok().header("Content-Type", "application/json").body(new Response(download_link));
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/txt")
-    public String pdfToTxt(InputStream in) throws IOException {
+    public ResponseEntity pdfToTxt(InputStream in) throws IOException {
         File pdf_file = fileService.createFile("pdf");
         FileOutputStream fileOutputStream = new FileOutputStream(pdf_file);
         int len;
@@ -99,7 +105,7 @@ public class PdfToWordService {
         pdfDocument = PDDocument.load(pdf_file);
         pdf_file.delete();
         if (pdfDocument == null) {
-            return "error";
+            return ResponseEntity.badRequest().body(new Response(null));
         }
         PDFTextStripper pdfStripper = new PDFTextStripper();
 
@@ -108,8 +114,8 @@ public class PdfToWordService {
         Files.write(Paths.get(txt_file.getAbsolutePath()), text.getBytes());
 
         pdfDocument.close();
+        download_link = awsService.uploadFile(txt_file).toString();
 
-
-        return txt_file.getAbsolutePath();
+        return ResponseEntity.ok().header("Content-Type", "application/json").body(new Response(download_link));
     }
 }
