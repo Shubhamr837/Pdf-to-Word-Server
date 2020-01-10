@@ -6,4 +6,4 @@ spring:
       default
   cloud:
     config:
-      uri: http://config-server
+      uri: http://config.config-server.com
