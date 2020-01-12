@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/convert")
 public class ImageToPdf {
     @Autowired
     FileService fileService;
@@ -96,7 +95,7 @@ public class ImageToPdf {
 
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/pdf/images")
+    @RequestMapping(method = RequestMethod.POST, value = "/")
     public ResponseEntity<Response> PdfToImages(InputStream in) throws Exception {
         File pdf_file = fileService.createFile("pdf");
         FileOutputStream fileOutputStream = new FileOutputStream(pdf_file);
