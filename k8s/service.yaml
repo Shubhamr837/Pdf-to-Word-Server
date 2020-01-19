@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: EurekaService
+  name: PdftoWordService
 spec:
   selector:
-    app: eureka
+    app: pdftoword
   ports:
     - protocol: TCP
       port: 80
