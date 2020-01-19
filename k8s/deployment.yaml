@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: pdftoword
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pdftoword
+    spec:
+      containers:
+        - name: pdftoword
+          image: 178621424795.dkr.ecr.us-east-2.amazonaws.com/shubhamr837:pdf-to-word
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 80
