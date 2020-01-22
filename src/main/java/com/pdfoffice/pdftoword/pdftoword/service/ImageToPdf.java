@@ -18,7 +18,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,8 +35,11 @@ public class ImageToPdf {
     @RequestMapping(method = RequestMethod.POST, value = "/images/pdf")
     public ResponseEntity<Response> ImagesToPdf(InputStream in) throws IOException {
 
+        String file_name = java.util.UUID.randomUUID().toString();
+        if (file_name.length() > 30)
+            file_name = file_name.substring(0, 30);
 
-        File zip_file = fileService.createFile("pdf");
+        File zip_file = fileService.createFile(file_name);
         FileOutputStream fileOutputStream = new FileOutputStream(zip_file);
         int len;
         byte[] buffer = new byte[1024];
@@ -51,13 +53,11 @@ public class ImageToPdf {
         } finally {
             in.close();
         }
-        if (Files.exists(Paths.get(System.getProperty("user.dir") + "/temp"))) {
 
-        } else {
-            new File(System.getProperty("user.dir") + "/temp").mkdir();
-        }
-        File temp_directory = new File(System.getProperty("user.dir") + "/temp");
-        Packager.unzip(zip_file.getAbsolutePath(), System.getProperty("user.dir") + "/temp");
+        new File(System.getProperty("user.dir") + "/" + file_name).mkdir();
+
+        File temp_directory = new File(System.getProperty("user.dir") + "/" + file_name);
+        Packager.unzip(zip_file.getAbsolutePath(), System.getProperty("user.dir") + "/" + file_name);
         zip_file.delete();
         File[] img_files = temp_directory.listFiles();
 
@@ -71,7 +71,6 @@ public class ImageToPdf {
                 PDPage page = new PDPage(new PDRectangle(width, height));
                 doc.addPage(page);
                 page = doc.getPage(i);
-
                 // createFromFile is the easiest way with an image file
                 // if you already have the image in a BufferedImage,
                 // call LosslessFactory.createFromImage() instead
@@ -85,10 +84,17 @@ public class ImageToPdf {
                 }
                 img_files[i].delete();
             }
-            pdf_file = fileService.createFile("pdf_file.pdf");
+
+            pdf_file = fileService.createFile(file_name + ".pdf");
+
             doc.save(pdf_file);
             download_link = awsService.uploadFile(pdf_file).toString();
 
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            pdf_file.delete();
+            temp_directory.delete();
         }
 
         return ResponseEntity.ok().header("Content-Type", "application/json").body(new Response(download_link));
