@@ -97,7 +97,6 @@ public class Packager {
                 String fileName = ze.getName();
                 File newFile = new File(destDir + File.separator + fileName);
                 System.out.println("Unzipping to " + newFile.getAbsolutePath());
-                //create directories for sub directories in zip
                 FileOutputStream fos = new FileOutputStream(newFile);
                 int len;
                 while ((len = zis.read(buffer)) > 0) {
