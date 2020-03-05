@@ -18,8 +18,8 @@ before_install:
 - curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
 - unzip awscli-bundle.zip
 - sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-- export AWS_ACCESS_KEY_ID=AKIASTFVKUSNQXINESXB
-- export AWS_SECRET_ACCESS_KEY=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
+- export AWS_ACCESS_KEY_ID=
+- export AWS_SECRET_ACCESS_KEY=
 - export AWS_DEFAULT_REGION=us-east-2
 - docker load -i docker_images/images.tar || true
 script:
