@@ -15,19 +15,13 @@ branches:
   only:
   - master
 before_install:
-- curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-- unzip awscli-bundle.zip
-- sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-- export AWS_ACCESS_KEY_ID=
-- export AWS_SECRET_ACCESS_KEY=
-- export AWS_DEFAULT_REGION=us-east-2
 - docker load -i docker_images/images.tar || true
 script:
 - ./mvnw package
-- $(aws ecr get-login --no-include-email --region us-east-2)
+
 - docker build -t shubhamr837 .
-- docker tag shubhamr837:latest 178621424795.dkr.ecr.us-east-2.amazonaws.com/shubhamr837:pdf-to-word
-- docker push 178621424795.dkr.ecr.us-east-2.amazonaws.com/shubhamr837:pdf-to-word
+- docker tag shubhamr837:latest shubhamr837/pdf:pdf-server
+- docker push shubhamr837/pdf:pdf-server
 
 before_cache:
   - docker save -o docker_images/images.tar $(docker images -a -q)
