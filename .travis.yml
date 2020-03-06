@@ -25,7 +25,7 @@ script:
 - ./mvnw package
 
 - docker build --build-arg AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID --build-arg AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY -t shubhamr837 .
-- docker tag shubhamr837:latest shubhamr837/pdf:pdf-server
+- docker tag shubhamr837:latest pdf-server
 - docker push shubhamr837/pdf:pdf-server
 
 before_cache:
