@@ -22,6 +22,7 @@ env:
     - secure: rP133eAI5DAQOhpXkhLDxtRRBcEC7zGaLScV9ix30RBmM5aRskj/MVpKFEhK50QGqVcEVYcD098lu6W5CZeK7ht0wmjUuD0Sb/sxlyPSiWL8VDysoazh/NLrixRM82w32M6O3IyiNTMvfwozeo1ieDzjiIHr7TtTwdzA6fqo3TVdnEv1fhZkfjTDmBpSTppFKvS4MShuYAFSPauFUPG4MND/L5FaZ0oddUmvfFBdYpynOgoeJhLXLgXDs1AqTedW2Dm/2qd36Go1t4X0r5jYaGsbGuffHT3IpC5gR+7x+gj0OZTyabZ91bl8PCcqVco/EIQD+zdPiF/OKeXk4C0DJBM6VBWtKWbBqs32pgXx0kUXzbHXG1Ryp3VKqvA+xq8/G/iMXXTLUJO0YCPoUKqdIc7OLeIUvMppxRZXVTe4Qfq2S+jkAKhQaX9yf7HuO2DUI/p22BSPUhnlRbHNC2l9z33p+KEFi7+ibSsmDuZpZUattseboW2ufk5kTQ5MJ0YSrjSo/PdEP/XmZgRBQ1zC1TNyGGMeE0W2Th1VE5LojbOO2mbHtjjTdamx9i3KqbnVYzOPI0IXLeqREc9OeHm9URkJNuS82rQQrodeh7gRjouCk/1FJ/SFjAC15VtYKtee0b0KC1Z8duAOREd5kaiotElnFxRuSB7RCqNjdUohNXg=
 before_install:
 - openssl aes-256-cbc -K $encrypted_7cfcfc98630c_key -iv $encrypted_7cfcfc98630c_iv -in Dockerfile.enc -out Dockerfile -d
+- docker login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD docker.io
 - docker load -i docker_images/images.tar || true
 - export AWS_DEFAULT_REGION=us-east-2
 script:
