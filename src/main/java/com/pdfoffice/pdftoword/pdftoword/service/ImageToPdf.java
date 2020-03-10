@@ -20,7 +20,6 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 public class ImageToPdf {
@@ -118,11 +117,13 @@ public class ImageToPdf {
         } finally {
             in.close();
         }
-        List<File> img_files = convertPdfToImage(pdf_file, System.getProperty("user.dir") + "/tempdir" + "/" + UUID.randomUUID().toString());
+        String dir_name = "temp";
+        List<File> img_files = convertPdfToImage(pdf_file, dir_name);
         pdf_file.delete();
-        File zip_file = fileService.createFile("temp_images.zip");
+        File zip_file = fileService.createFile(dir_name);
         Packager.packZip(zip_file, img_files);
         download_link = awsService.uploadFile(zip_file).toString();
+        zip_file.delete();
 
         return ResponseEntity.ok().header("Content-Type", "application/json").body(new Response(download_link));
     }
