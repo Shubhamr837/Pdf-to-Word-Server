@@ -20,6 +20,7 @@ import java.io.*;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 public class ImageToPdf {
@@ -101,7 +102,7 @@ public class ImageToPdf {
 
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/")
+    @RequestMapping(method = RequestMethod.POST, value = "/pdf/images")
     public ResponseEntity<Response> PdfToImages(InputStream in) throws Exception {
         File pdf_file = fileService.createFile("pdf");
         FileOutputStream fileOutputStream = new FileOutputStream(pdf_file);
@@ -117,7 +118,7 @@ public class ImageToPdf {
         } finally {
             in.close();
         }
-        List<File> img_files = convertPdfToImage(pdf_file, System.getProperty("user.dir") + "/temp");
+        List<File> img_files = convertPdfToImage(pdf_file, System.getProperty("user.dir") + "/tempdir" + "/" + UUID.randomUUID().toString());
         pdf_file.delete();
         File zip_file = fileService.createFile("temp_images.zip");
         Packager.packZip(zip_file, img_files);
@@ -148,8 +149,6 @@ public class ImageToPdf {
             System.out.println("CONVERTER START.....");
 
             for (int i = 0; i < doc.getNumberOfPages(); i++) {
-                // default image files path: original file path
-                // if necessary, file.getParent() + "/" => another path
                 File fileTemp = new File(destination + fileName + "_" + i + ".jpg"); // jpg or png
                 BufferedImage image = renderer.renderImageWithDPI(i, 200);
                 // 200 is sample dots per inch.
