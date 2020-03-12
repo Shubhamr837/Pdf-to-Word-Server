@@ -12,6 +12,6 @@ spec:
       containers:
         - name: pdftoword
           image: gcr.io/crested-ratio-257703/pdf-server:latest
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - containerPort: 80
