@@ -36,10 +36,10 @@ public class ImageToPdf {
     public ResponseEntity<Response> ImagesToPdf(InputStream in) throws IOException {
 
         String file_name = java.util.UUID.randomUUID().toString();
-        if (file_name.length() > 30)
-            file_name = file_name.substring(0, 30);
+        if (file_name.length() > 25)
+            file_name = file_name.substring(0, 25);
 
-        File zip_file = fileService.createFile(file_name);
+        File zip_file = fileService.createFile(file_name + ".zip");
         FileOutputStream fileOutputStream = new FileOutputStream(zip_file);
         int len;
         byte[] buffer = new byte[1024];
