@@ -1,17 +1,17 @@
  steps:
- - name: gcr.io/cloud-builders/gcloud
-  args:
-  - kms
-  - decrypt
-  - --ciphertext-file=Dockerfile.enc
-  - --plaintext-file=Dockerfile
-  - --location=global
-  - --keyring=pdf_keyring
-  - --key=pdf-key
- - name: maven:3-jdk-8
-   entrypoint: mvn
-   args: ['package','-Dmaven.test.skip=true']
- - name: 'gcr.io/cloud-builders/docker'
-   args: ['build', '-t', 'gcr.io/crested-ratio-257703/pdf-server', '.']
- - name: 'gcr.io/cloud-builders/docker'
-   args: ['push', 'gcr.io/crested-ratio-257703/pdf-server']
+  - name: gcr.io/cloud-builders/gcloud
+   args:
+   - kms
+   - decrypt
+   - --ciphertext-file=Dockerfile.enc
+   - --plaintext-file=Dockerfile
+   - --location=global
+   - --keyring=pdf_keyring
+   - --key=pdf-key
+  - name: maven:3-jdk-8
+    entrypoint: mvn
+    args: ['package','-Dmaven.test.skip=true']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/crested-ratio-257703/pdf-server', '.']
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/crested-ratio-257703/pdf-server']
