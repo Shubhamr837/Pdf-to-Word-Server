@@ -40,6 +40,7 @@ public class ImageToPdf {
             file_name = file_name.substring(0, 25);
 
         File zip_file = fileService.createFile(file_name + ".zip");
+        System.out.println("created zipfile at " + zip_file.getAbsolutePath());
         FileOutputStream fileOutputStream = new FileOutputStream(zip_file);
         int len;
         byte[] buffer = new byte[1024];

@@ -84,6 +84,7 @@ public class Packager {
 
     public static void unzip(String zipFilePath, String destDir) {
         File dir = new File(destDir);
+        System.out.println("Unzipping files");
         // create output directory if it doesn't exist
         if (!dir.exists()) dir.mkdirs();
         FileInputStream fis;
