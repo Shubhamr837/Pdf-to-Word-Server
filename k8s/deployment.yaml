@@ -11,7 +11,7 @@ spec:
     spec:
       containers:
         - name: pdftoword
-          image: 178621424795.dkr.ecr.us-east-2.amazonaws.com/shubhamr837:pdf-to-word
+          image: gcr.io/crested-ratio-257703/pdf-server:latest
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 80
