@@ -21,7 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 
 @RestController
-@RequestMapping(method = RequestMethod.POST, value = "/convert")
+@RequestMapping(method = RequestMethod.POST)
 public class PdfToWordService {
     private String download_link;
     @Autowired
@@ -29,7 +29,7 @@ public class PdfToWordService {
     @Autowired
     private AwsService awsService;
 
-    @RequestMapping(method = RequestMethod.POST, value = "/docx")
+    @RequestMapping(method = RequestMethod.POST, value = "/pdf/docx")
     public ResponseEntity pdftoword(InputStream in) throws IOException {
         File pdf_file = fileService.createFile("pdf");
         FileOutputStream fileOutputStream = new FileOutputStream(pdf_file);
@@ -85,7 +85,7 @@ public class PdfToWordService {
         return ResponseEntity.ok().header("Content-Type", "application/json").body(new Response(download_link));
     }
 
-    @RequestMapping(method = RequestMethod.POST, value = "/txt")
+    @RequestMapping(method = RequestMethod.POST, value = "pdf/txt")
     public ResponseEntity pdfToTxt(InputStream in) throws IOException {
         File pdf_file = fileService.createFile("pdf");
         FileOutputStream fileOutputStream = new FileOutputStream(pdf_file);
