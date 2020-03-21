@@ -2,16 +2,17 @@ package com.pdfoffice.pdftoword.pdftoword.service;
 
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.HttpMethod;
-import com.amazonaws.SdkClientException;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.AWSStaticCredentialsProvider;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.regions.Regions;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.amazonaws.services.s3.transfer.TransferManager;
+import com.amazonaws.services.s3.transfer.TransferManagerBuilder;
+import com.amazonaws.services.s3.transfer.Upload;
 import com.pdfoffice.pdftoword.pdftoword.utils.CommonConstants;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,7 @@ public class AwsService {
     public AwsService() {
         credentials = new BasicAWSCredentials(System.getenv("AWS_ACCESS_KEY_ID"), System.getenv("AWS_SECRET_ACCESS_KEY"));
         s3Client = AmazonS3ClientBuilder.standard()
-                .withRegion(Regions.AP_SOUTH_1)
+                .withRegion(Regions.US_EAST_2)
                 .withCredentials(new AWSStaticCredentialsProvider(credentials))
                 .build();
     }
@@ -41,10 +42,17 @@ public class AwsService {
             expTimeMillis += 1000 * 60 * 60;
             expiration.setTime(expTimeMillis);
 
-            s3Client.putObject(
-                    new PutObjectRequest(CommonConstants.BUCKET_NAME, file.getName(), file)
-                            .withCannedAcl(CannedAccessControlList.Private));
+            TransferManager tm = TransferManagerBuilder.standard()
+                    .withS3Client(s3Client)
+                    .build();
+            PutObjectRequest request = new PutObjectRequest(CommonConstants.BUCKET_NAME, java.util.UUID.randomUUID().toString(), file);
 
+            // TransferManager processes all transfers asynchronously,
+            // so this call returns immediately.
+            Upload upload = tm.upload(request);
+
+            // Optionally, you can wait for the upload to finish before continuing.
+            upload.waitForCompletion();
             // Generate the presigned URL.
             System.out.println("Generating pre-signed URL.");
             GeneratePresignedUrlRequest generatePresignedUrlRequest =
@@ -58,7 +66,7 @@ public class AwsService {
             return url;
         } catch (AmazonServiceException e) {
             e.printStackTrace();
-        } catch (SdkClientException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
