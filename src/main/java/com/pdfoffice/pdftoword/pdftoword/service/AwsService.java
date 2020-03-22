@@ -45,7 +45,8 @@ public class AwsService {
             TransferManager tm = TransferManagerBuilder.standard()
                     .withS3Client(s3Client)
                     .build();
-            PutObjectRequest request = new PutObjectRequest(CommonConstants.BUCKET_NAME, java.util.UUID.randomUUID().toString(), file);
+            String key = java.util.UUID.randomUUID().toString();
+            PutObjectRequest request = new PutObjectRequest(CommonConstants.BUCKET_NAME, key, file);
 
             // TransferManager processes all transfers asynchronously,
             // so this call returns immediately.
@@ -56,7 +57,7 @@ public class AwsService {
             // Generate the presigned URL.
             System.out.println("Generating pre-signed URL.");
             GeneratePresignedUrlRequest generatePresignedUrlRequest =
-                    new GeneratePresignedUrlRequest(CommonConstants.BUCKET_NAME, file.getName())
+                    new GeneratePresignedUrlRequest(CommonConstants.BUCKET_NAME, key)
                             .withMethod(HttpMethod.GET)
                             .withExpiration(expiration);
             url = s3Client.generatePresignedUrl(generatePresignedUrlRequest);
