@@ -121,7 +121,7 @@ public class ImageToPdf {
         String dir_name = "temp";
         List<File> img_files = convertPdfToImage(pdf_file, dir_name);
         pdf_file.delete();
-        File zip_file = fileService.createFile(dir_name);
+        File zip_file = fileService.createFile("temp.zip");
         Packager.packZip(zip_file, img_files);
         download_link = awsService.uploadFile(zip_file).toString();
         zip_file.delete();
