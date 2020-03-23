@@ -13,8 +13,8 @@ The application registers in the eureka server with name 'pdftoword' and the req
 google cloub build is used for continous integration which you can configure accordingly for your account .
 The docker file is encrypted as it contains the environment variables for login in AWS for using aws s3 service .
 
-To use this server create your Own Dockerfile With an AWS_ACCESS_ID and AWS_SECRET_KEY environment variables obtained from aws .
-The aws s3 bucketname and region can be configured in package com.pdfoffice.pdftoword.pdftoword.utils.
+To use this server create your Own Dockerfile With an AWS_ACCESS_ID and AWS_SECRET_KEY environment variables obtained from aws or it can be directly written in Code in package com.pdfoffice.pdftoword.pdftoword.utils.CommonConstants.
+The aws s3 bucketname and region has to be configured in package com.pdfoffice.pdftoword.pdftoword.utils.CommonConstants
 
 Following are the apis for this application .
 
