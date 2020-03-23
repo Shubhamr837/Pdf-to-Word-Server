@@ -14,6 +14,7 @@ google cloub build is used for continous integration which you can configure acc
 The docker file is encrypted as it contains the environment variables for login in AWS for using aws s3 service .
 
 To use this server create your Own Dockerfile With an AWS_ACCESS_ID and AWS_SECRET_KEY environment variables obtained from aws .
+The aws s3 bucketname and region can be configured in package com.pdfoffice.pdftoword.pdftoword.utils.
 
 Following are the apis for this application .
 
