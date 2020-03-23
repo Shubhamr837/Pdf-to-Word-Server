@@ -17,6 +17,8 @@ To use this server create your Own Dockerfile With an AWS_ACCESS_ID and AWS_SECR
 
 Following are the apis for this application .
 
+The {server url} is {zuul-proxy-url}/{pdftoword} . The zuul proxy url is the url of the zuul proxy appliation which routes requests to this service . It can be obtained after the zuul proxy kubernetes service is run .
+
 Converting PDF to Images
 
 http://{server url}/pdf/images
