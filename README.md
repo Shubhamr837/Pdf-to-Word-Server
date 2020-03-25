@@ -3,6 +3,14 @@ Pdf to image and pdf to word conversion Spring boot application.
 The kubernetes files can be found in the k8s folder .
 the application uses Apache POI and Apache PDFbox libraries.
 
+Prior knowledge of following are needed to run the application .
+
+1 . kubernetes
+
+2 . GCP or aws
+
+3 . continous integration
+
 This Container has to be deployed in Kubernetes with two other repository :-
 https://github.com/Shubhamr837/Pdf-Office-Eureka-Server .
 https://github.com/Shubhamr837/Pdf-Office-Zuul-Proxy .
@@ -11,6 +19,7 @@ The kubernetes deployment and service file are in k8 folder .
 The application registers in the eureka server with name 'pdftoword' and the requests are routed through the zuul proxy application .
 
 google cloub build is used for continous integration which you can configure accordingly for your account .
+The image url in kubernetes deployment file also has to be configured accordingly.
 The docker file is encrypted as it contains the environment variables for login in AWS for using aws s3 service .
 
 To use this server create your Own Dockerfile With an AWS_ACCESS_ID and AWS_SECRET_KEY environment variables obtained from aws or it can be directly written in Code in package com.pdfoffice.pdftoword.pdftoword.utils.CommonConstants.
