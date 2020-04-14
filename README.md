@@ -27,9 +27,9 @@ The aws s3 bucketname and region has to be configured in package com.pdfoffice.p
 
 Following are the apis for this application .
 
-The {server url} is {zuul-proxy-url}/{pdftoword} . The zuul proxy url is the url of the zuul proxy appliation which routes requests to this service . It can be obtained after the zuul proxy kubernetes service is run .
+The {server url} is {zuul-proxy-url}/pdftoword. The zuul proxy url is the url of the zuul proxy appliation which routes requests to this service . It can be obtained after the zuul proxy kubernetes service is run .
 
-Converting PDF to Images
+Converting PDF to Images.
 
 http://{server url}/pdf/images
 
