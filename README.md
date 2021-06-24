@@ -18,7 +18,7 @@ https://github.com/Shubhamr837/Pdf-Office-Zuul-Proxy .
 The kubernetes deployment and service file are in k8 folder .
 The application registers in the eureka server with name 'pdftoword' and the requests are routed through the zuul proxy application .
 
-google cloub build is used for continous integration which you can configure accordingly for your account .
+google cloud build is used for continous integration which you can configure accordingly for your account .
 The image url in kubernetes deployment file also has to be configured accordingly.
 The docker file is encrypted as it contains the environment variables for login in AWS for using aws s3 service .
 
