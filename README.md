@@ -15,6 +15,9 @@ This Container has to be deployed in Kubernetes with two other repository :-
 https://github.com/Shubhamr837/Pdf-Office-Eureka-Server .
 https://github.com/Shubhamr837/Pdf-Office-Zuul-Proxy .
 
+Android App that uses this app for conversion:
+https://github.com/Shubhamr837/Pdf_Office
+
 The kubernetes deployment and service file are in k8 folder .
 The application registers in the eureka server with name 'pdftoword' and the requests are routed through the zuul proxy application .
 
