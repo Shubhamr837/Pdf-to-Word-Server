@@ -14,4 +14,4 @@ spec:
           image: gcr.io/crested-ratio-257703/pdf-server:latest
           imagePullPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 81
